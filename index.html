@@ -67,40 +67,5 @@
     </div>
     <div id="results"></div>
 
-    <script>
-        document.getElementById('search-button').addEventListener('click', function() {
-            const query = document.getElementById('search-input').value;
-            if (query) {
-                searchVideos(query);
-            }
-        });
-
-        function searchVideos(query) {
-            const encodedQuery = encodeURIComponent(query);
-            const apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=${encodedQuery}&key=YOUR_API_KEY`;
-
-            fetch(apiUrl)
-                .then(response => response.json())
-                .then(data => {
-                    const resultsContainer = document.getElementById('results');
-                    resultsContainer.innerHTML = '';
-
-                    data.items.forEach(item => {
-                        const videoId = item.id.videoId;
-                        const title = item.snippet.title;
-
-                        const videoItem = document.createElement('div');
-                        videoItem.classList.add('video-item');
-                        videoItem.innerHTML = `
-                            <h3>${title}</h3>
-                            <iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>
-                        `;
-
-                        resultsContainer.appendChild(videoItem);
-                    });
-                })
-                .catch(error => console.error('Error:', error));
-        }
-    </script>
 </body>
 </html>
